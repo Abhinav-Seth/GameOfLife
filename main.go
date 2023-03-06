@@ -26,7 +26,7 @@ func main() {
 }
 
 func intialiseGrid(M int, N int) [][]int {
-	grid := getArray(M, N)
+	grid := makeArray(M, N)
 	for k := 0; k < rand.Intn(M*N); k++ {
 		i := rand.Intn(M)
 		j := rand.Intn(N)
@@ -35,7 +35,7 @@ func intialiseGrid(M int, N int) [][]int {
 	return grid
 }
 
-func getArray(M int, N int) [][]int {
+func makeArray(M int, N int) [][]int {
 	grid := make([][]int, M)
 	for i := range grid {
 		grid[i] = make([]int, N)
@@ -44,12 +44,12 @@ func getArray(M int, N int) [][]int {
 }
 
 func nextGeneration(intialGrid [][]int, M int, N int) [][]int {
-	finalGrid := getArray(M, N)
+	finalGrid := makeArray(M, N)
 	for i := range intialGrid {
-		for j := range intialGrid {
+		for j := range intialGrid[i] {
 			isLive := intialGrid[i][j] == 1
 			liveN := countLiveNeighbors(intialGrid, i, j, M, N)
-			if isLive && liveN == 2 || liveN == 3 {
+			if isLive && (liveN == 2 || liveN == 3) {
 				finalGrid[i][j] = 1
 			} else if !isLive && liveN == 3 {
 				finalGrid[i][j] = 1
